@@ -5,13 +5,13 @@ namespace JornadaMilhas.Test
 {
     public class ExercicioMusicaTest
     {
-        [Fact]
-        public void TesteNomeInicializadoCorretamente()
+        [Theory]
+        [InlineData("Música Teste")]
+        [InlineData("Outra Música")]
+        [InlineData("Mais uma Música rs")]
+        public void InicializaNomeCorretamenteQuandoCadastraNovaMusica(string nome)
         {
             // Padrão Triplo A - AAA (Arrange, Act e Assert)
-
-            //cenário - arrange
-            string nome = "Tell me Why?";
 
             //ação - act
             Musica musica = new Musica(nome);
@@ -20,40 +20,41 @@ namespace JornadaMilhas.Test
             Assert.Equal(nome, musica.Nome);
         }
 
-        [Fact]
-        public void TesteIdentificadorInicializadoCorretamente()
+        [Theory]
+        [InlineData("Música Teste", "Nome: Música Teste")]
+        [InlineData("Outra Música", "Nome: Outra Música")]
+        [InlineData("Mais uma Música", "Nome: Mais uma Música")]
+        public void ExibeDadosDaMusicaCorretamenteQuandoChamadoMetodoExibeFichaTecnica
+                (string nome, string saidaEsperada)
         {
-            // Padrão Triplo A - AAA (Arrange, Act e Assert)
+            // Arrange
+            Musica musica = new Musica(nome);
+            var stringWriter = new StringWriter();
+            Console.SetOut(stringWriter);
 
-            //cenário - arrange
-            int id = 1;
-            string nome = "Tell me Why?";
+            // Act
+            musica.ExibirFichaTecnica();
+            string saidaAtual = stringWriter.ToString().Trim();
 
-            //ação - act
-            Musica musica = new Musica(nome) { Id = id };
-
-            //validação - assert
-            Assert.Equal(id, musica.Id);
+            // Assert
+            Assert.Equal(saidaEsperada, saidaAtual);
         }
 
-        [Fact]
-        public void TesteToString()
+        [Theory]
+        [InlineData(1, "Música Teste", "Id: 1 Nome: Música Teste")]
+        [InlineData(2, "Outra Música", "Id: 2 Nome: Outra Música")]
+        [InlineData(3, "Mais uma Música", "Id: 3 Nome: Mais uma Música")]
+        public void ExibeDadosDaMusicaCorretamenteQuandoChamadoMetodoToString(int id, string nome, string toStringEsperado)
         {
-            // Padrão Triplo A - AAA (Arrange, Act e Assert)
-
-            //cenário - arrange
-            int id = 1;
-            string nome = "Tell me Why?";
+            // Arrange
             Musica musica = new Musica(nome);
             musica.Id = id;
-            string toStringEsperado = @$"Id: {id} Nome: {nome}";
 
-            //ação - act
+            // Act
             string resultado = musica.ToString();
 
-
-            //validação - assert
-            Assert.Equal(toStringEsperado, musica.ToString());
+            // Assert
+            Assert.Equal(toStringEsperado, resultado);
         }
     }
 }
