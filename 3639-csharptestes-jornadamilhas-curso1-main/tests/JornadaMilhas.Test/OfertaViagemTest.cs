@@ -51,5 +51,20 @@ namespace JornadaMilhas.Test
             Assert.False(oferta.EhValido);
             
         }
+
+        [Fact]
+        public void TestandoOfertaComPrecoNegativo()
+        {
+            //arrange
+            Rota rota = new Rota("Origem", "Destino");
+            Periodo periodo = new Periodo(new DateTime(2024, 1, 1), new DateTime(2024, 3, 3));
+            double preco = -300;
+
+            //act
+            OfertaViagem oferta = new OfertaViagem(rota, periodo, preco);
+
+            //assert
+            Assert.Contains("O preço da oferta de viagem deve ser maior que zero.", oferta.Erros.Sumario);
+        }
     }
 }
