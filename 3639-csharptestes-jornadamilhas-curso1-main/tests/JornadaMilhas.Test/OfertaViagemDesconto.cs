@@ -9,14 +9,15 @@ namespace JornadaMilhas.Test
 {
     public class OfertaViagemDesconto
     {
-        [Fact]
-        public void RetornaPrecoAtualizadoQuandoAplicadoDesconto()
+        [Theory]
+        [InlineData(20.00)]
+        [InlineData(0)]
+        public void RetornaPrecoAtualizadoQuandoAplicadoDesconto(double desconto)
         {
             // arrange
             Rota rota = new Rota("OrigemA", "DestinoB");
             Periodo periodo = new Periodo(new DateTime(2024, 05, 01), new DateTime(2024, 05, 10));
             double precoOriginal = 100.00;
-            double desconto = 20.00;
             double precoComDesconto = precoOriginal - desconto;
 
             OfertaViagem oferta = new OfertaViagem(rota, periodo, precoOriginal);
@@ -28,15 +29,15 @@ namespace JornadaMilhas.Test
             Assert.Equal(precoComDesconto, oferta.Preco);
         }
 
-        [Fact]
-        public void RetornaDescontoMaximoQuandoValorDescontoMaiorQuePreco()
+        [Theory]
+        [InlineData(150.00, 30.00)]
+        [InlineData(100.00, 30.00)]
+        public void RetornaDescontoMaximoQuandoValorDescontoMaiorOuIgualAoPreco(double desconto, double precoComDesconto)
         {
             // arrange
             Rota rota = new Rota("OrigemA", "DestinoB");
             Periodo periodo = new Periodo(new DateTime(2024, 05, 01), new DateTime(2024, 05, 10));
             double precoOriginal = 100.00;
-            double desconto = 150.00;
-            double precoComDesconto = 30.00;
 
             OfertaViagem oferta = new OfertaViagem(rota, periodo, precoOriginal);
 
@@ -47,14 +48,16 @@ namespace JornadaMilhas.Test
             Assert.Equal(precoComDesconto, oferta.Preco, 0.001);
         }
 
-        [Fact]
-        public void RetornaPrecoOriginalQuandoDescontoENegativo()
+        [Theory]
+        [InlineData(100.00, -150.00)]
+        [InlineData(0, -150.00)]
+        [InlineData(0, 0)]
+        [InlineData(100.00, 0)]
+        public void RetornaPrecoOriginalQuandoDescontoENegativo(double precoOriginal, double desconto)
         {
             // arrange
             Rota rota = new Rota("OrigemA", "DestinoB");
             Periodo periodo = new Periodo(new DateTime(2024, 05, 01), new DateTime(2024, 05, 10));
-            double precoOriginal = 100.00;
-            double desconto = -150.00;
             double precoComDesconto = precoOriginal;
 
             OfertaViagem oferta = new OfertaViagem(rota, periodo, precoOriginal);
