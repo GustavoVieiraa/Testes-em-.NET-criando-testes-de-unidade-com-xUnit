@@ -56,5 +56,33 @@ namespace JornadaMilhas.Test
             // Assert
             Assert.Equal(toStringEsperado, resultado);
         }
+
+        [Fact]
+        public void RetornaAnoDeLancamentoNuloQuandoValorEhMenorQueZero()
+        {
+            // Arrange
+            int anoInvalido = -1;
+            Musica musica = new Musica("Nome");
+
+
+            // Act
+            musica.AnoLancamento = anoInvalido;
+
+            // Assert
+            Assert.Null(musica.AnoLancamento);
+        }
+
+        [Fact]
+        public void RetornaArtistaDesconhecidoQuandoValorInseridoEhNulo()
+        {
+            // Arrange
+            Musica musica = new Musica("Nome");
+
+            // Act
+            musica.Artista = null;
+
+            // Assert
+            Assert.Equal("Artista desconhecido", musica.Artista);
+        }
     }
 }

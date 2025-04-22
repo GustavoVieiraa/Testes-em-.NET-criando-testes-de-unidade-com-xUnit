@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace JornadaMilhas.Exercicio
 {
     public class Musica
     {
+        private int? anoLancamento;
+        private string? artista;
+
         public Musica(string nome)
         {
             Nome = nome;
@@ -15,7 +14,37 @@ namespace JornadaMilhas.Exercicio
 
         public string Nome { get; set; }
         public int Id { get; set; }
-        public string Artista { get; set; }
+        public string? Artista
+        {
+            get => artista;
+            set
+            {
+                if (artista == null)
+                {
+                    artista = "Artista desconhecido";
+                }
+                else
+                {
+                    artista = value;
+                }
+            }
+        }
+
+        public int? AnoLancamento
+        {
+            get => anoLancamento;
+            set
+            {
+                if (value <= 0)
+                {
+                    anoLancamento = null;
+                }
+                else
+                {
+                    anoLancamento = value;
+                }
+            }
+        }
 
         public void ExibirFichaTecnica()
         {
