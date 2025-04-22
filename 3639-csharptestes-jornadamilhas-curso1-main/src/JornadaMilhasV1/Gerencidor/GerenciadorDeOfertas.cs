@@ -1,9 +1,4 @@
 ﻿using JornadaMilhasV1.Modelos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JornadaMilhasV1.Gerencidor;
 public class GerenciadorDeOfertas
@@ -65,6 +60,7 @@ public class GerenciadorDeOfertas
 
     }
 
+    public OfertaViagem? RecuperaMaiorDesconto(Func<OfertaViagem, bool> filtro) => ofertaViagem.FirstOrDefault();
 
     public void CarregarOfertas()
     {
